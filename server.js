@@ -161,13 +161,14 @@ io.on('connection', (socket) => {
 http.listen(port, () => {
   mongo.connect(url, (err, db) => {
     try {
-      db.collection('messages').remove({});
+      if (db) {
+        db.collection('messages').remove({});
+        db.close();
+      }
     } catch (err) {}
-    db.close();
   });
   console.log(`Listening on port ${port}....`);
 });
-
 
 // ADDITIONAL SOURCES
 
